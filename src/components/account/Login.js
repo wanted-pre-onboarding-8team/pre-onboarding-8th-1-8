@@ -1,9 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
-import { login } from '../../apis/auth';
+import {login} from '../../apis/auth';
 import useInput from '../../hooks/useInput';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import useRequest from '../../hooks/useRequest';
 import Button from '../common/Button';
 import Input from '../common/Input';
@@ -11,9 +9,7 @@ import Input from '../common/Input';
 const Container = tw.form`flex flex-col w-10/12 h-full justify-center pb-10 items-center rounded-xl gap-6`;
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { setValue } = useLocalStorage('access_token');
-  const { handleRequest } = useRequest();
+  const {handleRequest} = useRequest();
   const form = {
     email: useInput({
       initialValue: '',
@@ -32,13 +28,12 @@ const Login = () => {
   const handleOnSubmit = event => {
     event.preventDefault();
     handleRequest({
-      submitFunction: login,
-      formData: { email: form.email.value, password: form.password.value },
-    }).then(response => {
-      setValue(response.data['access_token']);
-      navigate('/todo');
-    });
-  };
+        submitFunction: login,
+        formData: {email: form.email.value, password: form.password.value},
+        action: 'LOGIN',
+      }
+    )
+  }
 
   return (
     <Container onSubmit={handleOnSubmit}>
