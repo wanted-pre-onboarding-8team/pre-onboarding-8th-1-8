@@ -12,7 +12,7 @@ const useRequest = () => {
 
   const handleTodoList = response => {
     setToDoResponse(response['data']);
-  }
+  };
 
   const handleSignInSuccess = response => {
     alert(MESSAGE.LOGIN_SUCCEED);
@@ -37,6 +37,7 @@ const useRequest = () => {
   const handleRequest = async ({ submitFunction, formData, action }) => {
     try {
       const response = await submitFunction(formData);
+      console.log('1');
       responseAction({ action, response });
     } catch (error) {
       const { status } = error.response;
@@ -56,7 +57,7 @@ const useRequest = () => {
   return {
     handleRequest,
     error,
-    toDoResponse
+    toDoResponse,
   };
 };
 

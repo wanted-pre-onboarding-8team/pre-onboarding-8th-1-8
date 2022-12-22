@@ -1,6 +1,8 @@
-import { RadioContext } from '../contexts/RadioContext';
+import { createContext } from 'react';
 
-const RadioGroup = ({ children, ...rest }) => {
+const RadioContext = createContext({});
+
+const RadioContextProvider = ({ children, ...rest }) => {
   return (
     <fieldset className="flex flex-row w-full justify-evenly mt-4 text-xl font-semibold">
       <RadioContext.Provider value={rest}>{children}</RadioContext.Provider>
@@ -8,4 +10,4 @@ const RadioGroup = ({ children, ...rest }) => {
   );
 };
 
-export default RadioGroup;
+export { RadioContextProvider, RadioContext };
