@@ -1,5 +1,5 @@
+import PageTemplate from '../components/@common/PageTemplate';
 import Account from '../components/account/Account';
-import PageTemplate from '../components/common/PageTemplate';
 
 const AccountPage = () => {
   return (

@@ -1,4 +1,4 @@
-import PageTemplate from '../components/common/PageTemplate';
+import PageTemplate from '../components/@common/PageTemplate';
 
 const TmpPage = () => {
   return <PageTemplate></PageTemplate>;

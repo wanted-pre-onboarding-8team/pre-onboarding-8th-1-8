@@ -11,7 +11,7 @@ const MESSAGE = {
   TODO_EMPTY: '할일을 입력해 주세요.',
   EMAIL_ERROR: '이메일 형식이 올바르지 않습니다.',
   PASSWORD_ERROR: '비밀번호가 8자 이상인지 확인해 주세요.',
-  PASSWORD_CHECK_ERROR: '비밀번호가 같지 않습니다.'
+  PASSWORD_CHECK_ERROR: '비밀번호가 같지 않습니다.',
 };
 
 export default MESSAGE;
