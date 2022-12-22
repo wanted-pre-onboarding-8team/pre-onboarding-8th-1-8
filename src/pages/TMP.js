@@ -1,9 +1,7 @@
 import PageTemplate from '../components/common/PageTemplate';
-const TmpPpage = () => {
-  return (
-    <PageTemplate>
-    </PageTemplate>
-  );
+
+const TmpPage = () => {
+  return <PageTemplate></PageTemplate>;
 };
 
-export default TmpPpage;
+export default TmpPage;

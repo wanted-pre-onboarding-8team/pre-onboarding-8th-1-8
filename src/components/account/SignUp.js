@@ -1,6 +1,7 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
-import {login} from '../../apis/auth';
+
+import { signIn } from '../../apis/auth';
 import useInput from '../../hooks/useInput';
 import useRequest from '../../hooks/useRequest';
 import Button from '../common/Button';
@@ -8,8 +9,8 @@ import Input from '../common/Input';
 
 const Container = tw.form`flex flex-col w-10/12 h-full justify-center pb-10 items-center rounded-xl gap-6`;
 
-const Login = () => {
-  const {handleRequest} = useRequest();
+const SignUp = () => {
+  const { handleRequest } = useRequest();
   const form = {
     email: useInput({
       initialValue: '',
@@ -28,12 +29,11 @@ const Login = () => {
   const handleOnSubmit = event => {
     event.preventDefault();
     handleRequest({
-        submitFunction: login,
-        formData: {email: form.email.value, password: form.password.value},
-        action: 'LOGIN',
-      }
-    )
-  }
+      submitFunction: signIn,
+      formData: { email: form.email.value, password: form.password.value },
+      action: 'LOGIN',
+    });
+  };
 
   return (
     <Container onSubmit={handleOnSubmit}>
@@ -50,4 +50,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

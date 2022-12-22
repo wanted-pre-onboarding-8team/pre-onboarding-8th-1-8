@@ -1,5 +1,6 @@
 import tw from 'tailwind-styled-components';
-import {join} from '../../apis/auth';
+
+import { signUp } from '../../apis/auth';
 import useInput from '../../hooks/useInput';
 import useRequest from '../../hooks/useRequest';
 import Button from '../common/Button';
@@ -7,8 +8,8 @@ import Input from '../common/Input';
 
 const Container = tw.form`flex flex-col w-10/12 h-full justify-center items-center rounded-xl gap-4`;
 
-const Join = () => {
-  const {handleRequest} = useRequest();
+const SignIn = () => {
+  const { handleRequest } = useRequest();
   const form = {
     email: useInput({
       initialValue: '',
@@ -32,18 +33,17 @@ const Join = () => {
   const handleOnSubmit = event => {
     event.preventDefault();
     handleRequest({
-        submitFunction: join,
-        formData: {email: form.email.value, password: form.password.value},
-        action: 'JOIN',
-      }
-    )
+      submitFunction: signUp,
+      formData: { email: form.email.value, password: form.password.value },
+      action: 'JOIN',
+    });
   };
 
   return (
     <Container onSubmit={handleOnSubmit}>
       <Input type="email" label="Email" {...form.email} />
       <Input type="password" label="Password" {...form.password} />
-      <Input type="password" label="Password Check" {...form.pwdCheck} pattern={form.password.value}/>
+      <Input type="password" label="Password Check" {...form.pwdCheck} pattern={form.password.value} />
       <Button
         type="submit"
         className={'bg-rose-400 text-white shadow-md mx-auto w-24 h-12'}
@@ -55,4 +55,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default SignIn;

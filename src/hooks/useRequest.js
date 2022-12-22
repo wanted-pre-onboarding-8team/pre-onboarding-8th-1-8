@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import MESSAGE from '../utils/constants/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
+
+import MESSAGE from '../utils/constants/ErrorMessage';
 import useLocalStorage from './useLocalStorage';
 
 const useRequest = () => {
@@ -32,7 +33,7 @@ const useRequest = () => {
       .then(response => responseAction({ action, response }))
       .catch(error => {
         if (error.response.status === 400) {
-          alert(MESSAGE.USER_ALREY_EXIST);
+          alert(MESSAGE.USER_ALREADY_EXIST);
         } else if (error.response.status === 401) {
           alert(MESSAGE.USER_NOT_MATCH);
         } else if (error.response.status === 404) {

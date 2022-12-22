@@ -2,10 +2,11 @@ import useAuthMethod from 'hooks/useAuthMethod';
 import tw from 'tailwind-styled-components';
 
 import RadioGroup from '../RadioGroup';
-import Container from '../common/Container';
 import Radio from '../common/Radio';
-import Join from './Join';
-import Login from './Login';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+
+const Container = tw.div`flex flex-col shadow-md items-center w-11/12 h-5/6 mx-auto rounded-xl gap-2 bg-slate-50 my-auto`;
 
 const Header = tw.div`flex flex-col items-center gap-5 w-full shadow-md p-4 rounded-xl`;
 
@@ -23,7 +24,7 @@ const Account = () => {
           <Radio value="join">Join</Radio>
         </RadioGroup>
       </Header>
-      {authMethod === 'login' ? <Login /> : <Join />}
+      {authMethod === 'login' ? <SignUp /> : <SignIn />}
     </Container>
   );
 };

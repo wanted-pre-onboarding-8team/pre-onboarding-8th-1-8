@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 
-const Container = tw.div`relative w-full`;
+const StyledContainer = tw.div`relative w-full`;
 
 const StyledInput = tw.input`p-3 w-full text-gray-900 bg-slate-50 rounded-lg border-2 border-slate-600 
 transition ease-in duration-600
@@ -13,11 +13,11 @@ const ErrorMessage = tw.span`text-rose-400 text-sm ml-2`;
 
 const Input = ({ type, label, errorMessage, valid, ...rest }) => {
   return (
-    <Container>
+    <StyledContainer>
       <StyledInput type={type} {...rest} />
       <StyledLabel>{label}</StyledLabel>
       {!valid && <ErrorMessage>{errorMessage}</ErrorMessage>}
-    </Container>
+    </StyledContainer>
   );
 };
 
