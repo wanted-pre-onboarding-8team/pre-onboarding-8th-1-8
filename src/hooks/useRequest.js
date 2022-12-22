@@ -1,7 +1,7 @@
+import MESSAGE from 'constants/ErrorMessage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import MESSAGE from '../utils/constants/ErrorMessage';
 import useLocalStorage from './useLocalStorage';
 
 const useRequest = () => {
