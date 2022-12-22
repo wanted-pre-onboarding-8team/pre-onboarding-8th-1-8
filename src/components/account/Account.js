@@ -1,8 +1,9 @@
+import useAuthMethod from 'hooks/useAuthMethod';
 import tw from 'tailwind-styled-components';
-import useAuthMethod from '../../hooks/useAuthMethod';
+
+import RadioGroup from '../RadioGroup';
 import Container from '../common/Container';
 import Radio from '../common/Radio';
-import RadioGroup from '../RadioGroup';
 import Join from './Join';
 import Login from './Login';
 

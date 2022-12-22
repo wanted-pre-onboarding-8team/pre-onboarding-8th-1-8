@@ -1,7 +1,8 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
+
 import useLocalStorage from '../hooks/useLocalStorage';
 import AccountPage from '../pages/AccountPage';
-import TmpPpage from "../pages/TMP";
+import TmpPpage from '../pages/TMP';
 
 export const PrivateRouter = () => {
   const { storedValue } = useLocalStorage('access_token');

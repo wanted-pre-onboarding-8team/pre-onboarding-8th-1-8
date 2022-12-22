@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Validations from '../utils/constants/Validations';
 
 const useInput = ({ initialValue, errorMessage, required, pattern }) => {
@@ -7,8 +7,8 @@ const useInput = ({ initialValue, errorMessage, required, pattern }) => {
   const getPattern = Validations[pattern];
 
   const handleChange = event => {
-    event.target.value.match(getPattern) ? setValid(pre => true) : setValid(pre => false);
-    setValue(pre => event.target.value);
+    event.target.value.match(getPattern) ? setValid(() => true) : setValid(() => false);
+    setValue(() => event.target.value);
   };
 
   return {

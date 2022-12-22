@@ -5,7 +5,7 @@ import { RadioContext } from '../../contexts/RadioContext';
 const Label = tw.div`text-slate-600 transition ease-in duration-100 w-32 text-center
 peer-checked:border-b-2 peer-checked:border-b-rose-400 peer-checked:text-rose-400`;
 
-function Radio({ children, value, name, defaultChecked, disabled }) {
+function Radio({ children, value, name, disabled }) {
   const radioGroup = useContext(RadioContext);
 
   return (
