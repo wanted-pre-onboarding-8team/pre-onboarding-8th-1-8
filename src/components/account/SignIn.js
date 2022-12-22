@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import {join} from '../../apis/auth';
+import {signUp} from '../../apis/auth';
 import useInput from '../../hooks/useInput';
 import useRequest from '../../hooks/useRequest';
 import Button from '../common/Button';
@@ -7,7 +7,7 @@ import Input from '../common/Input';
 
 const Container = tw.form`flex flex-col w-10/12 h-full justify-center items-center rounded-xl gap-4`;
 
-const Join = () => {
+const SignIn = () => {
   const {handleRequest} = useRequest();
   const form = {
     email: useInput({
@@ -32,7 +32,7 @@ const Join = () => {
   const handleOnSubmit = event => {
     event.preventDefault();
     handleRequest({
-        submitFunction: join,
+        submitFunction: signUp,
         formData: {email: form.email.value, password: form.password.value},
         action: 'JOIN',
       }
@@ -55,4 +55,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default SignIn;

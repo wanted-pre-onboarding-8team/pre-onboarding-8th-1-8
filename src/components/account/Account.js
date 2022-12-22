@@ -3,8 +3,8 @@ import useAuthMethod from '../../hooks/useAuthMethod';
 import Container from '../common/Container';
 import Radio from '../common/Radio';
 import RadioGroup from '../RadioGroup';
-import Join from './Join';
-import Login from './Login';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 const Header = tw.div`flex flex-col items-center gap-5 w-full shadow-md p-4 rounded-xl`;
 
@@ -22,7 +22,7 @@ const Account = () => {
           <Radio value="join">Join</Radio>
         </RadioGroup>
       </Header>
-      {authMethod === 'login' ? <Login /> : <Join />}
+      {authMethod === 'login' ? <SignUp /> : <SignIn />}
     </Container>
   );
 };
