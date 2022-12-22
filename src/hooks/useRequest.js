@@ -6,24 +6,24 @@ import useLocalStorage from './useLocalStorage';
 
 const useRequest = () => {
   const navigate = useNavigate();
-  const { setValue } = useLocalStorage('access_token');
+  const { setStorageValue } = useLocalStorage('access_token');
   const [error, setError] = useState(false);
 
-  const loginRequest = response => {
+  const handleSignInSuccess = response => {
     alert(MESSAGE.LOGIN_SUCCEED);
-    setValue(response.data['access_token']);
+    setStorageValue(response.data['access_token']);
     navigate('/todo');
   };
 
-  const joinRequest = () => {
+  const handleSignUpSuccess = () => {
     alert(MESSAGE.SIGNIN_SUCCEED);
     navigate('/');
   };
 
   const responseAction = ({ action, response }) => {
     const actions = {
-      LOGIN: loginRequest,
-      JOIN: joinRequest,
+      SIGN_IN: handleSignInSuccess,
+      SIGN_UP: handleSignUpSuccess,
     };
     return actions[action](response);
   };
