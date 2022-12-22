@@ -28,22 +28,24 @@ const useRequest = () => {
     return actions[action](response);
   };
 
-  const handleRequest = ({ submitFunction, formData, action }) =>
-    submitFunction(formData)
-      .then(response => responseAction({ action, response }))
-      .catch(error => {
-        if (error.response.status === 400) {
-          alert(MESSAGE.USER_ALREADY_EXIST);
-        } else if (error.response.status === 401) {
-          alert(MESSAGE.USER_NOT_MATCH);
-        } else if (error.response.status === 404) {
-          alert(MESSAGE.USER_NOT_FOUND);
-        } else if (error.request) {
-          // 요청이 잘못된 경우
-          console.log(error.request);
-          setError(true);
-        }
-      });
+  const handleRequest = async ({ submitFunction, formData, action }) => {
+    try {
+      const response = await submitFunction(formData);
+      responseAction({ action, response });
+    } catch (error) {
+      const { status } = error.response;
+
+      if (status === 400) {
+        alert(MESSAGE.USER_ALREADY_EXIST);
+      } else if (status === 401) {
+        alert(MESSAGE.USER_NOT_MATCH);
+      } else if (status === 404) {
+        alert(MESSAGE.USER_NOT_FOUND);
+      }
+
+      setError(true);
+    }
+  };
 
   return {
     handleRequest,
