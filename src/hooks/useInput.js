@@ -6,11 +6,9 @@ const useInput = ({ initialValue, errorMessage, required, type }) => {
   const [valid, setValid] = useState(true);
   const regexp = VALIDATIONS[type];
 
-  const handleChange = event => {
-    if(event.target.value.length !== 0){
-      event.target.value.match(regexp) ? setValid(() => true) : setValid(() => false);
-    }
-    setValue(() => event.target.value);
+  const handleChange = ({ target: { value } }) => {
+    setValid(!!value.match(regexp));
+    setValue(value);
   };
 
   return {
