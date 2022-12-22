@@ -33,7 +33,7 @@ const TodoCard = ({ id, todo, isCompleted, handleUpdateTodo, handleDeleteTodo })
     setIsEdit(pre => !pre);
   };
 
-  const editOnClicke = () => {
+  const handleEditOnClick = () => {
     setIsEdit(pre => !pre);
   };
 
@@ -51,7 +51,7 @@ const TodoCard = ({ id, todo, isCompleted, handleUpdateTodo, handleDeleteTodo })
           <Checkbox type="checkbox" checked={isCompleted} onChange={handleOnChange} />
           <Todo>{todo}</Todo>
           <ButtonContainer>
-            <Button onClick={editOnClicke} className={' bg-rose-50'}>
+            <Button onClick={handleEditOnClick} className={' bg-rose-50'}>
               <EditIcon color={'#fb7185'} props={'h-6 w-4'} />
             </Button>
             <Button onClick={handleDeleteTodo(id)} className={'text-white bg-rose-400'}>

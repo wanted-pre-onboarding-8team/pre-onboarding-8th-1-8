@@ -1,5 +1,5 @@
 import { PageTemplate } from 'components/@common';
-import Todo from 'components/todo/ToDo';
+import Todo from 'components/todo/Todo';
 
 const TodoPage = () => {
   return (

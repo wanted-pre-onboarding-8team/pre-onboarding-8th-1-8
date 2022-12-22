@@ -1,7 +1,7 @@
 import { ROUTES } from 'constants';
 import { useLocalStorage } from 'hooks';
 import AccountPage from 'pages/AccountPage';
-import TodoPage from 'pages/ToDoPage';
+import TodoPage from 'pages/TodoPage';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 export const PrivateRouter = () => {
