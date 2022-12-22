@@ -7,7 +7,12 @@ import useLocalStorage from './useLocalStorage';
 const useRequest = () => {
   const navigate = useNavigate();
   const { setStorageValue } = useLocalStorage('access_token');
+  const [toDoResponse, setToDoResponse] = useState([]);
   const [error, setError] = useState(false);
+
+  const handleTodoList = response => {
+    setToDoResponse(response['data']);
+  }
 
   const handleSignInSuccess = response => {
     alert(MESSAGE.LOGIN_SUCCEED);
@@ -24,6 +29,7 @@ const useRequest = () => {
     const actions = {
       SIGN_IN: handleSignInSuccess,
       SIGN_UP: handleSignUpSuccess,
+      TODO_LIST: handleTodoList,
     };
     return actions[action](response);
   };
@@ -50,6 +56,7 @@ const useRequest = () => {
   return {
     handleRequest,
     error,
+    toDoResponse
   };
 };
 
