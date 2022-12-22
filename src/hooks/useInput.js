@@ -4,10 +4,10 @@ import { useState } from 'react';
 const useInput = ({ initialValue, errorMessage, required, pattern }) => {
   const [value, setValue] = useState(initialValue);
   const [valid, setValid] = useState(false);
-  const getPattern = VALIDATIONS[pattern];
+  const regexp = VALIDATIONS[pattern];
 
   const handleChange = event => {
-    event.target.value.match(getPattern) ? setValid(() => true) : setValid(() => false);
+    event.target.value.match(regexp) ? setValid(() => true) : setValid(() => false);
     setValue(() => event.target.value);
   };
 
