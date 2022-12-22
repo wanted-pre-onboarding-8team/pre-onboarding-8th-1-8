@@ -1,6 +1,6 @@
 import { Radio } from 'components/@common';
 import { RadioContextProvider } from 'contexts/RadioContextProvider';
-import { useAccountMethod } from 'hooks';
+import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 import SignUp from './SignIn';
@@ -11,7 +11,7 @@ const Header = tw.div`flex flex-col items-center gap-5 w-full shadow-md p-4 roun
 const Title = tw.h2`text-7xl text-rose-400`;
 
 const Account = () => {
-  const { accountMethod, setAccountMethod } = useAccountMethod('signin');
+  const [accountMethod, setAccountMethod] = useState('signin');
 
   return (
     <Container>
