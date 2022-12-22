@@ -1,23 +1,23 @@
 import { useState } from 'react';
 
 const useLocalStorage = (key, initialValue) => {
-  const [storedValue, setStoredValue] = useState(() => {
+  const [storageValue, setStorage] = useState(() => {
     const item = window.localStorage.getItem(key);
     return item ? JSON.parse(item) : initialValue;
   });
 
-  const setValue = value => {
-    const valueToStore = value instanceof Function ? value(storedValue) : value;
-    setStoredValue(() => valueToStore);
+  const setStorageValue = value => {
+    const valueToStore = value instanceof Function ? value(storageValue) : value;
+    setStorage(() => valueToStore);
 
     window.localStorage.setItem(key, JSON.stringify(valueToStore));
   };
 
-  const deleteValue = () => {
+  const deleteStorageValue = () => {
     window.localStorage.removeItem(key);
   };
 
-  return { storedValue, setValue, deleteValue };
+  return { storageValue, setStorageValue, deleteStorageValue };
 };
 
 export default useLocalStorage;
