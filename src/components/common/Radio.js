@@ -18,7 +18,7 @@ function Radio({ children, value, name, disabled }) {
         className="appearance-none peer"
         disabled={disabled || radioGroup.disabled}
         checked={radioGroup.value !== undefined ? value === radioGroup.value : undefined}
-        onChange={e => radioGroup.onChange && radioGroup.onChange(e.target.value)}
+        onChange={(e) => radioGroup.onChange && radioGroup.onChange(e.target.value)}
       />
       <Label>{children}</Label>
     </label>
