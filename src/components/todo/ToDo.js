@@ -1,9 +1,9 @@
+import { Button, Input } from 'components/@common';
+import { useInput } from 'hooks';
 import tw from 'tailwind-styled-components';
-import useInput from '../../hooks/useInput';
+
 import useTodo from '../../hooks/useTodo';
-import { LogOut, Send } from '../../utils/Svg';
-import Button from '../common/Button';
-import Input from '../common/Input';
+import { LogOutIcon, SendIcon } from '../../utils/Svg';
 import TodoCard from './TodoCard';
 
 const Container = tw.div`flex flex-col shadow-md items-center w-11/12 h-5/6 mx-auto rounded-xl gap-2 bg-slate-50 my-auto`;
@@ -19,7 +19,8 @@ const InputContainer = tw.form`flex flex-row w-10/12 mt-2 mb-3 justify-center it
 const Todo = () => {
   const { todos, handleCreateToDo, handleUpdateTodo, handleDeleteTodo, handleLogOut } = useTodo();
   const todoInput = useInput({
-    initialValue: '', required: true,
+    initialValue: '',
+    required: true,
   });
 
   const handleOnSubmit = event => {
@@ -31,28 +32,32 @@ const Todo = () => {
     handleLogOut();
   };
 
-  return (<Container>
-    <Header>
-      <Title>Todo</Title>
-      <Button className={'shadow-none text-rose-400 font-extrabold p-0 text-xl'} onClick={handleOnClick}>
-        <LogOut color={'#fb7185'} props={'w-9 h-9'} />
-      </Button>
-    </Header>
-    <Content>
-      {todos.map(todoData => (<TodoCard
-        key={todoData.id}
-        {...todoData}
-        handleUpdateTodo={handleUpdateTodo}
-        handleDeleteTodo={handleDeleteTodo}
-      />))}
-    </Content>
-    <InputContainer onSubmit={handleOnSubmit}>
-      <Input type='text' {...todoInput} />
-      <Button type='submit' className={'bg-rose-400 text-white shadow-md mx-auto w-22 h-12'}>
-        <Send props={'w-7 h-7 mx-auto'} color={'white'} />
-      </Button>
-    </InputContainer>
-  </Container>);
+  return (
+    <Container>
+      <Header>
+        <Title>Todo</Title>
+        <Button className={'shadow-none text-rose-400 font-extrabold p-0 text-xl'} onClick={handleOnClick}>
+          <LogOutIcon color={'#fb7185'} props={'w-9 h-9'} />
+        </Button>
+      </Header>
+      <Content>
+        {todos.map(todoData => (
+          <TodoCard
+            key={todoData.id}
+            {...todoData}
+            handleUpdateTodo={handleUpdateTodo}
+            handleDeleteTodo={handleDeleteTodo}
+          />
+        ))}
+      </Content>
+      <InputContainer onSubmit={handleOnSubmit}>
+        <Input type="text" {...todoInput} />
+        <Button type="submit" className={'bg-rose-400 text-white shadow-md mx-auto w-22 h-12'}>
+          <SendIcon props={'w-7 h-7 mx-auto'} color={'white'} />
+        </Button>
+      </InputContainer>
+    </Container>
+  );
 };
 
 export default Todo;

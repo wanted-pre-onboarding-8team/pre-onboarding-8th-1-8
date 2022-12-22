@@ -1,4 +1,4 @@
-export const Delete = ({ props, color }) => {
+export const DeleteIcon = ({ props, color }) => {
   return (
     <svg
       version="1.1"
@@ -32,7 +32,7 @@ export const Delete = ({ props, color }) => {
   );
 };
 
-export const Edit = ({ props, color }) => {
+export const EditIcon = ({ props, color }) => {
   return (
     <svg
       version="1.1"
@@ -60,7 +60,7 @@ export const Edit = ({ props, color }) => {
   );
 };
 
-export const LogOut = ({ props, color }) => {
+export const LogOutIcon = ({ props, color }) => {
   return (
     <svg
       version="1.1"
@@ -87,7 +87,7 @@ export const LogOut = ({ props, color }) => {
   );
 };
 
-export const Send = ({ props, color }) => {
+export const SendIcon = ({ props, color }) => {
   return (
     <svg
       version="1.1"
