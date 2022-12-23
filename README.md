@@ -1,4 +1,4 @@
-# 🗓️ Todo List Best Pratice
+# 🗓️ Todo List Best Practice
 
 <p align="middle">
 <img src="./screenshot.png" />
@@ -6,7 +6,7 @@
 
 ## 📄목차
 ---
-- [🗓️ Todo List Best Pratice](#️-todo-list-best-pratice)
+- [🗓️ Todo List Best Practice](#️-todo-list-best-pratice)
   - [📄목차](#목차)
   - [🧑🏻‍💻 팀원 소개](#-팀원-소개)
   - [📚 사용 라이브러리](#-사용-라이브러리)
@@ -160,7 +160,7 @@ const Input = ({ type, label, errorMessage, valid, ...rest }) => {
   disabled={!form.email.valid || !form.password.valid}
 >
 ```
-* Button 컴포넌트는 각 inputdl valid해야만 활성화
+* Button 컴포넌트는 각 input valid해야만 활성화
 
 
 **Hooks**
@@ -173,6 +173,7 @@ const useInput = ({ initialValue, errorMessage, required, type }) => {
     setValue(value);
   };
   ...
+}
 ```
 
 <br>
@@ -189,7 +190,7 @@ export const client = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 ```
-* axios 인스턴스의 정의 base url은 .evn 파일로 관리
+* axios 인스턴스의 정의 base url은 .env 파일로 관리
 ```javascript
 export const signUp = formData => client.post('/auth/signup', { email: formData.email, password: formData.password });
 
@@ -228,6 +229,8 @@ const useRequest = () => {
       if (action) {
         return responseAction({ action, response });
       }
+    }
+}
 ```
 * 모든 요청과 응답에 대한 책임과 역할을 가지는 useRequest의 설계 responseAction은 응답이후의 행동을 정의한다
 * SignIn의 경우 성공후 Todo 페이지로 SignUp의 경우 다시 /페이지로 리다이렉트
