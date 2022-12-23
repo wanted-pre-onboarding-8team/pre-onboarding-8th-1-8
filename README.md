@@ -18,6 +18,7 @@
     - [Assignment2](#assignment2)
     - [Assignment 3](#assignment-3)
     - [Assignment 4](#assignment-4)
+    - [Assignment5](#assignment5)
 
 <br>
 
@@ -340,3 +341,69 @@ const handleCreateToDo = async todo => {
   };
 ```
 - 각 요청에 따른 `handleRequest` 의 `response` 를 기반으로 setTodos를 진행하여 새로운 정보를 렌더링 시킵니다.
+
+### Assignment5
+
+- [x] 투두 리스트의 수정, 삭제 기능을 구현해주세요
+- [x] 투두 리스트의 개별 아이템 우측에 수정버튼이 존재하고 해당 버튼을 누르면 수정모드가 활성화되고 투두 리스트의 내용을 수정할 수 있도록 해주세요
+- [x] 수정모드에서는 개별 아이템의 우측에 제출버튼과 취소버튼이 표시되며 해당 버튼을 통해서 수정 내용을 제출하거나 수정을 취소할 수 있도록 해주세요
+- [x] 투두 리스트의 개별 아이템 우측에 삭제버튼이 존재하고 해당 버튼을 누르면 투두 리스트가 삭제되도록 해주세요
+
+```javascript 
+        {todos.map(todoData => (
+          <TodoCard
+            key={todoData.id}
+            {...todoData}
+            handleUpdateTodo={handleUpdateTodo}
+            handleDeleteTodo={handleDeleteTodo}
+          />
+        ))}
+```
+* 각 TodoCard는 부모 컴포넌트 Todo에 있는 useTodo에서 handleUpdateTodo, handleDeleteTodo를 받아 각각자신의 이벤트를 핸들링
+
+```jsx
+  if (isEdit) {
+    return (
+      <InputContainer onSubmit={handleOnSubmit}>
+    ...
+      </InputContainer>
+    );
+  }
+
+  return (
+    <Container>
+      ....
+    </Container>
+  );
+};
+```
+* early return으로 현재 수정중인지 아닌지에 따라 다르게 렌더링
+
+```javascript 
+ const handleUpdateTodo = async todo => {
+    const todoCopied = [...todos];
+
+    const id = todo.id;
+    const index = todos.findIndex(todo => todo.id === id);
+
+    const { data: modifiedTodo } = await handleRequest({
+      submitFunction: updateTodo,
+      formData: { ...todo, accessToken: storageValue },
+    });
+
+    todoCopied.splice(index, 1, modifiedTodo);
+    setTodos(todoCopied);
+  };
+
+  const handleDeleteTodo = async id => {
+    await handleRequest({
+      submitFunction: deleteTodo,
+      formData: { id: id, accessToken: storageValue },
+    });
+
+    const newTodoList = todos.filter(todo => todo.id !== id);
+
+    setTodos(newTodoList);
+  };
+```
+* 각각 의 수정 삭제 요청은 useTodo에서 처리 및 반영
