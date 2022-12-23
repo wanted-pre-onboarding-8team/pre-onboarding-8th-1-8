@@ -26,6 +26,7 @@ const Todo = () => {
   const handleOnSubmit = event => {
     event.preventDefault();
     handleCreateToDo(todoInput.value);
+    todoInput.setValue('');
   };
 
   const handleOnClick = () => {
