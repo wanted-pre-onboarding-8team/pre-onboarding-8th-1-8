@@ -1,4 +1,4 @@
-import MESSAGE from 'constants/ErrorMessage';
+import MESSAGE from 'constants/errorMessage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
