@@ -1,3 +1,4 @@
+import { LOCAL_STORAGE } from 'constants';
 import MESSAGE from 'constants/errorMessage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +7,7 @@ import useLocalStorage from './useLocalStorage';
 
 const useRequest = () => {
   const navigate = useNavigate();
-  const { setStorageValue } = useLocalStorage('access_token');
+  const { setStorageValue } = useLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
   const [error, setError] = useState(false);
 
   const handleTodoList = response => {
@@ -15,7 +16,7 @@ const useRequest = () => {
 
   const handleSignInSuccess = response => {
     alert(MESSAGE.LOGIN_SUCCEED);
-    setStorageValue(response.data['access_token']);
+    setStorageValue(response.data[LOCAL_STORAGE.ACCESS_TOKEN]);
     navigate('/todo');
   };
 
