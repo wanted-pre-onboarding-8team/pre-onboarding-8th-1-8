@@ -1,5 +1,5 @@
-import { LOCAL_STORAGE } from 'constants';
-import { ROUTES, useLocalStorage } from 'hooks';
+import { LOCAL_STORAGE, ROUTES } from 'constants';
+import { useLocalStorage } from 'hooks';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 const PublicRouter = () => {

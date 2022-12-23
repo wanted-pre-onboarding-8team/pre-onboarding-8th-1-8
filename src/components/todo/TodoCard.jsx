@@ -6,13 +6,9 @@ import tw from 'tailwind-styled-components';
 import { DeleteIcon, EditIcon, SendIcon } from '../../utils/Svg';
 
 const Container = tw.div`flex flex-row rounded-xl px-3 py-6 shadow-md my-4 h-24 w-11/12 bg-white gap-2 justify-between items-center`;
-
 const InputContainer = tw.form`flex flex-row rounded-xl px-3 py-6 shadow-md my-4 h-24 w-11/12 bg-white gap-2 justify-between items-center`;
-
 const ButtonContainer = tw.div`flex flex-row gap-1`;
-
 const Checkbox = tw.input`w-7 h-7 accent-rose-500 peer`;
-
 const Todo = tw.p`peer-checked:line-through overflow-hidden text-slate-600`;
 
 const TodoCard = ({ id, todo, isCompleted, handleUpdateTodo, handleDeleteTodo }) => {
@@ -35,38 +31,33 @@ const TodoCard = ({ id, todo, isCompleted, handleUpdateTodo, handleDeleteTodo })
     setIsEdit(pre => !pre);
   };
 
-  const handleEditOnClick = () => {
-    setIsEdit(pre => !pre);
-  };
+  const handleEditOnClick = () => setIsEdit(pre => !pre);
+  const handleClick = () => handleDeleteTodo(id);
 
-  const handleClick = () => {
-    handleDeleteTodo(id);
-  };
+  if (isEdit) {
+    return (
+      <InputContainer onSubmit={handleOnSubmit}>
+        <Input type="text" {...editTodo} />
+        <Button type="submit" className={'bg-rose-400 text-white shadow-md mx-auto w-22 h-12'}>
+          <SendIcon props={'w-7 h-7 mx-auto'} color={'white'} />
+        </Button>
+      </InputContainer>
+    );
+  }
 
   return (
-    <>
-      {isEdit ? (
-        <InputContainer onSubmit={handleOnSubmit}>
-          <Input type="text" {...editTodo} />
-          <Button type="submit" className={'bg-rose-400 text-white shadow-md mx-auto w-22 h-12'}>
-            <SendIcon props={'w-7 h-7 mx-auto'} color={'white'} />
-          </Button>
-        </InputContainer>
-      ) : (
-        <Container>
-          <Checkbox type="checkbox" checked={isCompleted} onChange={handleOnChange} />
-          <Todo>{todo}</Todo>
-          <ButtonContainer>
-            <Button onClick={handleEditOnClick} className={' bg-rose-50'}>
-              <EditIcon color={'#fb7185'} props={'h-6 w-4'} />
-            </Button>
-            <Button onClick={handleClick} className={'text-white bg-rose-400'}>
-              <DeleteIcon color={'white'} props={'h-6 w-4'} />
-            </Button>
-          </ButtonContainer>
-        </Container>
-      )}
-    </>
+    <Container>
+      <Checkbox type="checkbox" checked={isCompleted} onChange={handleOnChange} />
+      <Todo>{todo}</Todo>
+      <ButtonContainer>
+        <Button onClick={handleEditOnClick} className={' bg-rose-50'}>
+          <EditIcon color={'#fb7185'} props={'h-6 w-4'} />
+        </Button>
+        <Button onClick={handleClick} className={'text-white bg-rose-400'}>
+          <DeleteIcon color={'white'} props={'h-6 w-4'} />
+        </Button>
+      </ButtonContainer>
+    </Container>
   );
 };
 
