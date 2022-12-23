@@ -19,22 +19,25 @@ const useTodo = () => {
     setTodos(await handleRequest({ submitFunction: getTodo, formData: storageValue, action: 'TODO_LIST' }));
   };
 
-  const handleCreateToDo = todo => {
-    handleRequest({
+  const handleCreateToDo = async todo => {
+    await handleRequest({
       submitFunction: createTodo,
       formData: { todo: todo, accessToken: storageValue },
     });
+    handleGetTodo();
   };
 
-  const handleUpdateTodo = todo => {
-    handleRequest({
+  const handleUpdateTodo = async todo => {
+    await handleRequest({
       submitFunction: updateTodo,
       formData: { ...todo, accessToken: storageValue },
     });
+    handleGetTodo();
   };
 
-  const handleDeleteTodo = id => {
-    handleRequest({ submitFunction: deleteTodo, formData: { id: id, accessToken: storageValue } });
+  const handleDeleteTodo = async id => {
+    await handleRequest({ submitFunction: deleteTodo, formData: { id: id, accessToken: storageValue } });
+    handleGetTodo();
   };
 
   const handleLogOut = () => {
