@@ -1,6 +1,6 @@
-import MESSAGE from './errorMessage';
+import MESSAGE from './ErrorMessage';
+import VALIDATIONS from './Validations';
 import LOCAL_STORAGE from './localStorage';
 import ROUTES from './routes';
-import VALIDATIONS from './validations';
 
 export { MESSAGE, VALIDATIONS, ROUTES, LOCAL_STORAGE };

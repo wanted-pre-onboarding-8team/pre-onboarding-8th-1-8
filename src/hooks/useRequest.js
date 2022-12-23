@@ -7,11 +7,11 @@ import useLocalStorage from './useLocalStorage';
 const useRequest = () => {
   const navigate = useNavigate();
   const { setStorageValue } = useLocalStorage('access_token');
-  const [toDoResponse, setToDoResponse] = useState([]);
   const [error, setError] = useState(false);
 
   const handleTodoList = response => {
-    setToDoResponse(response['data']);
+    console.log(response);
+    return response['data'];
   };
 
   const handleSignInSuccess = response => {
@@ -37,8 +37,9 @@ const useRequest = () => {
   const handleRequest = async ({ submitFunction, formData, action }) => {
     try {
       const response = await submitFunction(formData);
-      console.log('1');
-      responseAction({ action, response });
+      if (action) {
+        return responseAction({ action, response });
+      }
     } catch (error) {
       const { status } = error.response;
 
@@ -57,7 +58,6 @@ const useRequest = () => {
   return {
     handleRequest,
     error,
-    toDoResponse,
   };
 };
 

@@ -1,4 +1,4 @@
-import VALIDATIONS from 'constants/validations';
+import VALIDATIONS from 'constants/Validations';
 import { useState } from 'react';
 
 const useInput = ({ initialValue, errorMessage, required, type }) => {
