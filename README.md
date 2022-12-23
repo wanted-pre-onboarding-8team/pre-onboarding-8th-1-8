@@ -58,11 +58,118 @@ yarn start
 
 
 **Etc**
-* 상수들은 contants폴더에 정리
+* 상수들은 constants 정리
 * 이름은 각각의 목적과 역할을 알기 쉽게 작성
-* eslint, pretter를 사용해 코드 컨벤션 설정
+* eslint, prettier 사용해 코드 컨벤션 설정
 
 <br>
 
-## 🏆 Best Pratice
+## 🏆 Best Practice
 ---
+
+### Assignment 3
+
+- [x] 로그인 여부에 따른 리다이렉트 처리를 구현해주세요
+- [x] 로컬 스토리지에 토큰이 있는 상태로 `/` 페이지에 접속한다면 `/todo` 경로로 리다이렉트 시켜주세요
+- [x] 로컬 스토리지에 토큰이 없는 상태로 `/todo` 페이지에 접속한다면 `/` 경로로 리다이렉트 시켜주세요
+```
+
+const PrivateRouter = () => {
+  const { storageValue: accessToken } = useLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
+
+  return !accessToken ? <Navigate to={ROUTES.HOME} replace /> : <Outlet />;
+};
+
+
+const PublicRouter = () => {
+  const { pathname } = useLocation();
+  const { storageValue: accessToken } = useLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
+
+  if (pathname === ROUTES.HOME) {
+    return accessToken ? <Navigate to={ROUTES.TODO} replace /> : <Outlet />;
+  }
+
+  return accessToken ? <Navigate to={ROUTES.HOME} replace /> : <Outlet />;
+};
+```
+
+- `Private` / `Public` Router 를 구현해 로그인 / 비로그인 접근 가능한 라우트를 구분했습니다.
+- `로그인`시 에만 접근 가능한 route는 `PrivateRouter의` 하위
+- `비로그인`시 에만 접근 가능한 route는 `PublicRouter의` 하위
+
+
+### Assignment 4
+
+- [x] 리스트 페이지에는 투두 리스트의 내용과 완료 여부가 표시되어야 합니다.
+- [x] 리스트 페이지에는 입력창과 추가 버튼이 있고, 추가 버튼을 누르면 입력창의 내용이
+      새로운 투두 리스트로 추가되도록 해주세요
+
+**useRequest.js**
+```
+const handleRequest = async ({ submitFunction, formData, action }) => {
+    try {
+      const response = await submitFunction(formData);
+
+      if (action) {
+        return responseAction({ action, response });
+      }
+
+      return response;
+    } catch (error) {
+      const { status } = error.response;
+
+      if (status === 400) {
+        alert(MESSAGE.USER_ALREADY_EXIST);
+      } else if (status === 401) {
+        alert(MESSAGE.USER_NOT_MATCH);
+      } else if (status === 404) {
+        alert(MESSAGE.USER_NOT_FOUND);
+      }
+
+      setError(true);
+    }
+  };
+```
+- `handleRequest` 함수는 Todo의 전반적인 `CRUD` 관련 request 을 handling 해줘 재사용성을 높인 함수이며 `상태코드별 에러핸들링` 로직을 포함하고 있습니다.
+- `에러 메시지`는 `상수`로 관리되고 있습니다.
+- `try` 문에서 `response`를 return 해 useTodo hook의 사용부에서 `response를 기반으로 업데이트된 todo를 렌더링 해줍니다.`
+
+
+**useTodo.js**
+```
+const handleCreateToDo = async todo => {
+    const { data: newTodo } = await handleRequest({
+      submitFunction: createTodo,
+      formData: { todo: todo, accessToken: storageValue },
+    });
+
+    setTodos([...todos, newTodo]);
+  };
+
+  const handleUpdateTodo = async todo => {
+    const todoCopied = [...todos];
+
+    const id = todo.id;
+    const index = todos.findIndex(todo => todo.id === id);
+
+    const { data: modifiedTodo } = await handleRequest({
+      submitFunction: updateTodo,
+      formData: { ...todo, accessToken: storageValue },
+    });
+
+    todoCopied.splice(index, 1, modifiedTodo);
+    setTodos(todoCopied);
+  };
+
+  const handleDeleteTodo = async id => {
+    await handleRequest({
+      submitFunction: deleteTodo,
+      formData: { id: id, accessToken: storageValue },
+    });
+
+    const newTodoList = todos.filter(todo => todo.id !== id);
+
+    setTodos(newTodoList);
+  };
+```
+- 각 요청에 따른 `handleRequest` 의 `response` 를 기반으로 setTodos를 진행하여 새로운 정보를 렌더링 시킵니다.
