@@ -10,7 +10,6 @@ const useRequest = () => {
   const [error, setError] = useState(false);
 
   const handleTodoList = response => {
-    console.log(response);
     return response['data'];
   };
 

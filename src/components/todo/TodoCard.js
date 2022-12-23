@@ -54,7 +54,7 @@ const TodoCard = ({ id, todo, isCompleted, handleUpdateTodo, handleDeleteTodo })
             <Button onClick={handleEditOnClick} className={' bg-rose-50'}>
               <EditIcon color={'#fb7185'} props={'h-6 w-4'} />
             </Button>
-            <Button onClick={handleDeleteTodo(id)} className={'text-white bg-rose-400'}>
+            <Button onClick={handleDeleteTodo} className={'text-white bg-rose-400'}>
               <DeleteIcon color={'white'} props={'h-6 w-4'} />
             </Button>
           </ButtonContainer>

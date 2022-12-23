@@ -31,7 +31,7 @@ const Todo = () => {
   const handleOnClick = () => {
     handleLogOut();
   };
-  console.log(todos);
+
   return (
     <Container>
       <Header>
