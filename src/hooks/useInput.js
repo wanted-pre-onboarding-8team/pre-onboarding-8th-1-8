@@ -13,10 +13,10 @@ const useInput = ({ initialValue, errorMessage, required, type }) => {
 
   return {
     value,
-    setValue,
     errorMessage,
     required,
     valid,
+    onSubmit: setValue,
     onChange: handleChange,
   };
 };
