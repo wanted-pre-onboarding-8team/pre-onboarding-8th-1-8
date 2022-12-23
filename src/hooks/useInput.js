@@ -1,4 +1,4 @@
-import VALIDATIONS from 'constants/validations';
+import VALIDATIONS from 'constants/Validations';
 import { useState } from 'react';
 
 const useInput = ({ initialValue, errorMessage, required, type }) => {
@@ -13,7 +13,6 @@ const useInput = ({ initialValue, errorMessage, required, type }) => {
 
   return {
     value,
-    setValue,
     errorMessage,
     required,
     valid,

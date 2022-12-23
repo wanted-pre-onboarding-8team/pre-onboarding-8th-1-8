@@ -26,13 +26,12 @@ const Todo = () => {
   const handleOnSubmit = event => {
     event.preventDefault();
     handleCreateToDo(todoInput.value);
-    todoInput.setValue('');
+    todoInput.onSubmit('');
   };
 
   const handleOnClick = () => {
     handleLogOut();
   };
-
   return (
     <Container>
       <Header>
@@ -52,7 +51,7 @@ const Todo = () => {
         ))}
       </Content>
       <InputContainer onSubmit={handleOnSubmit}>
-        <Input type="text" {...todoInput} />
+        <Input type="text" {...todoInput} placeholder="오늘의 할일을 입력해주세요" />
         <Button type="submit" className={'bg-rose-400 text-white shadow-md mx-auto w-22 h-12'}>
           <SendIcon props={'w-7 h-7 mx-auto'} color={'white'} />
         </Button>
