@@ -16,6 +16,7 @@ const useInput = ({ initialValue, errorMessage, required, type }) => {
     errorMessage,
     required,
     valid,
+    onSubmit: setValue,
     onChange: handleChange,
   };
 };
