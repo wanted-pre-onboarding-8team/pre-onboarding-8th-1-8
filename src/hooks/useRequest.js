@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE } from 'constants';
+import { LOCAL_STORAGE, ROUTES } from 'constants';
 import MESSAGE from 'constants/errorMessage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -17,12 +17,12 @@ const useRequest = () => {
   const handleSignInSuccess = response => {
     alert(MESSAGE.LOGIN_SUCCEED);
     setStorageValue(response.data[LOCAL_STORAGE.ACCESS_TOKEN]);
-    navigate('/todo');
+    navigate(ROUTES.TODO);
   };
 
   const handleSignUpSuccess = () => {
     alert(MESSAGE.SIGNIN_SUCCEED);
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   const responseAction = ({ action, response }) => {
@@ -37,9 +37,12 @@ const useRequest = () => {
   const handleRequest = async ({ submitFunction, formData, action }) => {
     try {
       const response = await submitFunction(formData);
+
       if (action) {
         return responseAction({ action, response });
       }
+
+      return response;
     } catch (error) {
       const { status } = error.response;
 

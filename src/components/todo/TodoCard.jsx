@@ -24,11 +24,13 @@ const TodoCard = ({ id, todo, isCompleted, handleUpdateTodo, handleDeleteTodo })
 
   const handleOnChange = event => {
     event.preventDefault();
+
     handleUpdateTodo({ id: id, isCompleted: !isCompleted, todo: editTodo.value });
   };
 
   const handleOnSubmit = event => {
     event.preventDefault();
+
     handleUpdateTodo({ id: id, isCompleted: isCompleted, todo: editTodo.value });
     setIsEdit(pre => !pre);
   };

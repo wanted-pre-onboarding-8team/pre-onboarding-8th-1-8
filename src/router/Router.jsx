@@ -2,7 +2,6 @@ import { LOCAL_STORAGE, ROUTES } from 'constants';
 import { useLocalStorage } from 'hooks';
 import AccountPage from 'pages/AccountPage';
 import TodoPage from 'pages/ToDoPage';
-import { useEffect } from 'react';
 import { Navigate, Outlet, createBrowserRouter, useLocation } from 'react-router-dom';
 
 const PrivateRouter = () => {
@@ -11,7 +10,6 @@ const PrivateRouter = () => {
   return !accessToken ? <Navigate to={ROUTES.HOME} replace /> : <Outlet />;
 };
 
-useEffect;
 const PublicRouter = () => {
   const { pathname } = useLocation();
   const { storageValue: accessToken } = useLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
