@@ -1,6 +1,10 @@
 const VALIDATIONS = {
-  email: '^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$',
-  password: '^(?=.*[a-zA-Z])(?=.*).{8,25}$',
+  email(value) {
+    return value.includes('@');
+  },
+  password(value) {
+    return value.length >= 8;
+  },
 };
 
 export default VALIDATIONS;

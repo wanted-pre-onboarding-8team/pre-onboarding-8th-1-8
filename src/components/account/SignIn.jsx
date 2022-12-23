@@ -34,8 +34,8 @@ const SignIn = () => {
 
   return (
     <Container onSubmit={handleOnSubmit}>
-      <Input type="email" label="Email" {...form.email} />
-      <Input type="password" label="Password" {...form.password} />
+      <Input type="email" label="Email" autoComplete="username" {...form.email} />
+      <Input type="password" label="Password" autoComplete="current-password" {...form.password} />
       <Button
         type="submit"
         className={'mt-2 bg-rose-400 text-white shadow-md mx-auto w-24 h-12'}

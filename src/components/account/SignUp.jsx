@@ -40,9 +40,15 @@ const SignUp = () => {
 
   return (
     <Container onSubmit={handleOnSubmit}>
-      <Input type="email" label="Email" {...form.email} />
-      <Input type="password" label="Password" {...form.password} />
-      <Input type="password" label="Password Check" {...form.pwdCheck} pattern={form.password.value} />
+      <Input type="email" label="Email" autoComplete="username" {...form.email} />
+      <Input type="password" label="Password" autoComplete="current-password" {...form.password} />
+      <Input
+        type="password"
+        label="Password Check"
+        autoComplete="current-password"
+        {...form.pwdCheck}
+        pattern={form.password.value}
+      />
       <Button
         type="submit"
         className={'bg-rose-400 text-white shadow-md mx-auto w-24 h-12'}

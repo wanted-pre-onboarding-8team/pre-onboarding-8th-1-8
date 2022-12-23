@@ -1,22 +1,38 @@
 import { ROUTES } from 'constants';
-import { useLocalStorage } from 'hooks';
-import AccountPage from 'pages/AccountPage';
-import TodoPage from 'pages/TodoPage';
-import { Navigate, createBrowserRouter } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 
-export const PrivateRouter = () => {
-  const { storageValue } = useLocalStorage('access_token');
+import PrivateRouter from './PrivateRouter';
+import PublicRouter from './PublicRouter';
 
-  return storageValue === undefined || storageValue === null ? <Navigate to="/" /> : <TodoPage />;
-};
+const AccountPage = lazy(() => import('pages/AccountPage'));
+const TodoPage = lazy(() => import('pages/ToDoPage'));
 
 export const router = createBrowserRouter([
   {
-    path: ROUTES.HOME,
-    element: <AccountPage />,
+    element: <PublicRouter />,
+    children: [
+      {
+        path: ROUTES.HOME,
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <AccountPage />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
-    path: ROUTES.TODO,
     element: <PrivateRouter />,
+    children: [
+      {
+        path: ROUTES.TODO,
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <TodoPage />
+          </Suspense>
+        ),
+      },
+    ],
   },
 ]);

@@ -4,10 +4,10 @@ import { useState } from 'react';
 const useInput = ({ initialValue, errorMessage, required, type }) => {
   const [value, setValue] = useState(initialValue);
   const [valid, setValid] = useState(true);
-  const regexp = VALIDATIONS[type];
+  const isValid = VALIDATIONS[type];
 
   const handleChange = ({ target: { value } }) => {
-    setValid(!!value.match(regexp));
+    setValid(isValid(value));
     setValue(value);
   };
 
@@ -17,6 +17,7 @@ const useInput = ({ initialValue, errorMessage, required, type }) => {
     errorMessage,
     required,
     valid,
+    onSubmit: setValue,
     onChange: handleChange,
   };
 };
