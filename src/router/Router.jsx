@@ -1,10 +1,12 @@
 import { ROUTES } from 'constants';
-import AccountPage from 'pages/AccountPage';
-import TodoPage from 'pages/ToDoPage';
+import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import PrivateRouter from './PrivateRouter';
 import PublicRouter from './PublicRouter';
+
+const AccountPage = lazy(() => import('pages/AccountPage'));
+const TodoPage = lazy(() => import('pages/ToDoPage'));
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +14,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.HOME,
-        element: <AccountPage />,
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <AccountPage />
+          </Suspense>
+        ),
       },
     ],
   },
@@ -21,7 +27,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.TODO,
-        element: <TodoPage />,
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <TodoPage />
+          </Suspense>
+        ),
       },
     ],
   },
