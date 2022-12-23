@@ -72,8 +72,7 @@ yarn start
 - [x] 로그인 여부에 따른 리다이렉트 처리를 구현해주세요
 - [x] 로컬 스토리지에 토큰이 있는 상태로 `/` 페이지에 접속한다면 `/todo` 경로로 리다이렉트 시켜주세요
 - [x] 로컬 스토리지에 토큰이 없는 상태로 `/todo` 페이지에 접속한다면 `/` 경로로 리다이렉트 시켜주세요
-```
-
+```jsx
 const PrivateRouter = () => {
   const { storageValue: accessToken } = useLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
 
@@ -105,7 +104,7 @@ const PublicRouter = () => {
       새로운 투두 리스트로 추가되도록 해주세요
 
 **useRequest.js**
-```
+```jsx
 const handleRequest = async ({ submitFunction, formData, action }) => {
     try {
       const response = await submitFunction(formData);
@@ -136,7 +135,7 @@ const handleRequest = async ({ submitFunction, formData, action }) => {
 
 
 **useTodo.js**
-```
+```jsx
 const handleCreateToDo = async todo => {
     const { data: newTodo } = await handleRequest({
       submitFunction: createTodo,
