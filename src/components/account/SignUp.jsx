@@ -23,6 +23,7 @@ const SignUp = () => {
     }),
     pwdCheck: useInput({
       initialValue: '',
+      type: 'password',
       errorMessage: MESSAGE.PASSWORD_CHECK_ERROR,
       required: true,
     }),

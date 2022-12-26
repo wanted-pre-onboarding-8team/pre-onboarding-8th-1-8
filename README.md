@@ -1,14 +1,24 @@
-# 🗓️ Todo List Best Pratice
+# 🗓️ Todo List Best Practice
+
+<p align="middle">
+<img src="./screenshot.png" />
+</p>
 
 ## 📄목차
 ---
-- [🗓️ Todo List Best Pratice](#️-todo-list-best-pratice)
+- [🗓️ Todo List Best Practice](#️-todo-list-best-pratice)
   - [📄목차](#목차)
   - [🧑🏻‍💻 팀원 소개](#-팀원-소개)
   - [📚 사용 라이브러리](#-사용-라이브러리)
   - [🏃‍♂️ 실행방법](#️-실행방법)
   - [💡 설계 전략](#-설계-전략)
-  - [🏆 Best Pratice](#-best-pratice)
+  - [🏆 Best Practice](#-best-practice)
+    - [1. 로그인 / 회원가입](#1-로그인--회원가입)
+    - [Assignment1](#assignment1)
+    - [Assignment2](#assignment2)
+    - [Assignment 3](#assignment-3)
+    - [Assignment 4](#assignment-4)
+    - [Assignment5](#assignment5)
 
 <br>
 
@@ -66,6 +76,167 @@ yarn start
 
 ## 🏆 Best Practice
 ---
+### 1. 로그인 / 회원가입
+
+- [x] / 경로에 로그인 / 회원가입 기능을 개발해주세요
+  * 페이지 안에 이메일 입력창, 비밀번호 입력창, 제출 버튼이 포함된 형태로 구성해주세요
+  * 로그인, 회원가입을 별도의 경로로 분리해도 무방합니다.
+
+**Component**
+* 구현에 필요한 common 컴포넌트를 정의 및 구현
+* Account 컴포넌트에서 SignIn과 SignUp을 선택해서 렌더링하는 방식으로 설계
+* 페이지 전환을 하지않고 좀더 좋은 사용자 경험을 제공할 수 있는 장점
+```javascript
+const Account = () => {
+  const [accountMethod, setAccountMethod] = useState('signin');
+
+  return (
+    <Container>
+      <Header>
+        <Title>TODO</Title>
+        <RadioContextProvider value={accountMethod} onChange={setAccountMethod}>
+          <Radio value="signin">로그인</Radio>
+          <Radio value="signup">회원가입</Radio>
+        </RadioContextProvider>
+      </Header>
+      {accountMethod === 'signin' ? <SignUp /> : <SignIn />}
+    </Container>
+  );
+};
+```
+
+**Hooks**
+* useInput custom hook으로 SignIn/SignUp 컴포넌트의 input의 이벤트와 값의 valid, 에러 메시지 등을 핸들링
+```javascript
+const useInput = ({ initialValue, errorMessage, required, type }) => {
+  const [value, setValue] = useState(initialValue);
+  const [valid, setValid] = useState(true);
+  const regexp = VALIDATIONS[type];
+
+  const handleChange = ({ target: { value } }) => {
+    setValid(!!value.match(regexp));
+    setValue(value);
+  };
+
+  return {
+    value,
+    setValue,
+    errorMessage,
+    required,
+    valid,
+    onChange: handleChange,
+  };
+};
+
+```
+
+<br>
+
+### Assignment1
+- [x] 이메일과 비밀번호의 유효성 검사기능을 구현해주세요
+- [x] 이메일 조건: @ 포함
+- [x] 비밀번호 조건: 8자 이상
+- [x] 입력된 이메일과 비밀번호가 위 조건을 만족할 때만 버튼이 활성화 되도록 해주세요
+* 보안 상 실제 사용하고 계신 이메일과 패스워드말고 테스트용 이메일, 패스워드 사용을 권장드립니다.
+
+**Component**
+```javascript
+const Input = ({ type, label, errorMessage, valid, ...rest }) => {
+  return (
+    <StyledContainer>
+      <StyledInput type={type} {...rest} />
+      <StyledLabel>{label}</StyledLabel>
+      {!valid && <ErrorMessage>{errorMessage}</ErrorMessage>}
+    </StyledContainer>
+  );
+};
+```
+* Input 컴포넌트는 useInput의 valid를 보고 valid하지 않다면 errorMessage를 렌더링 
+
+```javascript
+<Button
+  type="submit"
+  className={'mt-2 bg-rose-400 text-white shadow-md mx-auto w-24 h-12'}
+  disabled={!form.email.valid || !form.password.valid}
+>
+```
+* Button 컴포넌트는 각 input valid해야만 활성화
+
+
+**Hooks**
+* input의 책임이 있는 useInput에서 값의 변화가 있을 시 해당 값이 valid 한지 안한지 검사
+```javascript
+const useInput = ({ initialValue, errorMessage, required, type }) => {
+  ...
+  const handleChange = ({ target: { value } }) => {
+    setValid(!!value.match(regexp));
+    setValue(value);
+  };
+  ...
+}
+```
+
+<br>
+
+
+### Assignment2
+- [x] 로그인 API를 호출하고, 올바른 응답을 받았을 때 /todo 경로로 이동해주세요
+- [x] 로그인 API는 로그인이 성공했을 시 Response Body에 JWT를 포함해서 응답합니다.
+- [x] 응답받은 JWT는 로컬 스토리지에 저장해주세요
+
+**Api**
+```javascript
+export const client = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
+});
+```
+* axios 인스턴스의 정의 base url은 .env 파일로 관리
+```javascript
+export const signUp = formData => client.post('/auth/signup', { email: formData.email, password: formData.password });
+
+export const signIn = formData => client.post('/auth/signin', { email: formData.email, password: formData.password });
+```
+* formData로 email과 password를 받아 body에 넣어 post 요청
+
+**Hooks**
+```javascript
+const useRequest = () => {
+  ... 
+  const handleSignInSuccess = response => {
+    alert(MESSAGE.LOGIN_SUCCEED);
+    setStorageValue(response.data[LOCAL_STORAGE.ACCESS_TOKEN]);
+    navigate(ROUTES.TODO);
+  };
+
+  const handleSignUpSuccess = () => {
+    alert(MESSAGE.SIGNIN_SUCCEED);
+    navigate(ROUTES.HOME);
+  };
+
+  const responseAction = ({ action, response }) => {
+    const actions = {
+      SIGN_IN: handleSignInSuccess,
+      SIGN_UP: handleSignUpSuccess,
+      TODO_LIST: handleTodoList,
+    };
+    return actions[action](response);
+  };
+
+  const handleRequest = async ({ submitFunction, formData, action }) => {
+    try {
+      const response = await submitFunction(formData);
+
+      if (action) {
+        return responseAction({ action, response });
+      }
+    }
+}
+```
+* 모든 요청과 응답에 대한 책임과 역할을 가지는 useRequest의 설계 responseAction은 응답이후의 행동을 정의한다
+* SignIn의 경우 성공후 Todo 페이지로 SignUp의 경우 다시 /페이지로 리다이렉트
+
+<br>
+
 
 ### Assignment 3
 
@@ -96,6 +267,7 @@ const PublicRouter = () => {
 - `로그인`시 에만 접근 가능한 route는 `PrivateRouter의` 하위
 - `비로그인`시 에만 접근 가능한 route는 `PublicRouter의` 하위
 
+<br>
 
 ### Assignment 4
 
@@ -172,3 +344,69 @@ const handleCreateToDo = async todo => {
   };
 ```
 - 각 요청에 따른 `handleRequest` 의 `response` 를 기반으로 setTodos를 진행하여 새로운 정보를 렌더링 시킵니다.
+
+### Assignment5
+
+- [x] 투두 리스트의 수정, 삭제 기능을 구현해주세요
+- [x] 투두 리스트의 개별 아이템 우측에 수정버튼이 존재하고 해당 버튼을 누르면 수정모드가 활성화되고 투두 리스트의 내용을 수정할 수 있도록 해주세요
+- [x] 수정모드에서는 개별 아이템의 우측에 제출버튼과 취소버튼이 표시되며 해당 버튼을 통해서 수정 내용을 제출하거나 수정을 취소할 수 있도록 해주세요
+- [x] 투두 리스트의 개별 아이템 우측에 삭제버튼이 존재하고 해당 버튼을 누르면 투두 리스트가 삭제되도록 해주세요
+
+```javascript 
+        {todos.map(todoData => (
+          <TodoCard
+            key={todoData.id}
+            {...todoData}
+            handleUpdateTodo={handleUpdateTodo}
+            handleDeleteTodo={handleDeleteTodo}
+          />
+        ))}
+```
+* 각 TodoCard는 부모 컴포넌트 Todo에 있는 useTodo에서 handleUpdateTodo, handleDeleteTodo를 받아 각각자신의 이벤트를 핸들링
+
+```jsx
+  if (isEdit) {
+    return (
+      <InputContainer onSubmit={handleOnSubmit}>
+    ...
+      </InputContainer>
+    );
+  }
+
+  return (
+    <Container>
+      ....
+    </Container>
+  );
+};
+```
+* early return으로 현재 수정중인지 아닌지에 따라 다르게 렌더링
+
+```javascript 
+ const handleUpdateTodo = async todo => {
+    const todoCopied = [...todos];
+
+    const id = todo.id;
+    const index = todos.findIndex(todo => todo.id === id);
+
+    const { data: modifiedTodo } = await handleRequest({
+      submitFunction: updateTodo,
+      formData: { ...todo, accessToken: storageValue },
+    });
+
+    todoCopied.splice(index, 1, modifiedTodo);
+    setTodos(todoCopied);
+  };
+
+  const handleDeleteTodo = async id => {
+    await handleRequest({
+      submitFunction: deleteTodo,
+      formData: { id: id, accessToken: storageValue },
+    });
+
+    const newTodoList = todos.filter(todo => todo.id !== id);
+
+    setTodos(newTodoList);
+  };
+```
+* 각각 의 수정 삭제 요청은 useTodo에서 처리 및 반영
