@@ -7,11 +7,10 @@ export const client = axios.create({
 client.interceptors.request.use(config => {
   const accessToken = localStorage.getItem('access_token');
 
-  if (!accessToken) {
-    config.headers['Authorization'] = null;
-  } else {
+  if (!config.headers) return config;
+
+  if (accessToken !== null) {
     config.headers['Authorization'] = `Bearer ${JSON.parse(accessToken)}`;
   }
-
   return config;
 });
