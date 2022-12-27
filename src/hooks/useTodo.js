@@ -10,20 +10,20 @@ const useTodo = () => {
   const navigate = useNavigate();
   const [todos, setTodos] = useState([]);
   const { handleRequest } = useRequest();
-  const { storageValue, deleteStorageValue } = useLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
+  const { deleteStorageValue } = useLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
 
   useEffect(() => {
     handleGetTodo();
   }, []);
 
   const handleGetTodo = async () => {
-    setTodos(await handleRequest({ submitFunction: getTodo, formData: storageValue, action: 'TODO_LIST' }));
+    setTodos(await handleRequest({ submitFunction: getTodo, action: 'TODO_LIST' }));
   };
 
   const handleCreateToDo = async todo => {
     const { data: newTodo } = await handleRequest({
       submitFunction: createTodo,
-      formData: { todo: todo, accessToken: storageValue },
+      formData: { todo: todo },
     });
 
     setTodos([...todos, newTodo]);
@@ -37,7 +37,7 @@ const useTodo = () => {
 
     const { data: modifiedTodo } = await handleRequest({
       submitFunction: updateTodo,
-      formData: { ...todo, accessToken: storageValue },
+      formData: { ...todo },
     });
 
     todoCopied.splice(index, 1, modifiedTodo);
@@ -47,7 +47,7 @@ const useTodo = () => {
   const handleDeleteTodo = async id => {
     await handleRequest({
       submitFunction: deleteTodo,
-      formData: { id: id, accessToken: storageValue },
+      formData: { id: id },
     });
 
     const newTodoList = todos.filter(todo => todo.id !== id);

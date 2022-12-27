@@ -6,7 +6,7 @@ import PrivateRouter from './PrivateRouter';
 import PublicRouter from './PublicRouter';
 
 const AccountPage = lazy(() => import('pages/AccountPage'));
-const TodoPage = lazy(() => import('pages/ToDoPage'));
+const TodoPage = lazy(() => import('pages/TodoPage'));
 
 export const router = createBrowserRouter([
   {

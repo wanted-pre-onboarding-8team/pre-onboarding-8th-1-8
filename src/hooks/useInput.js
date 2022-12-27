@@ -1,4 +1,4 @@
-import VALIDATIONS from 'constants/Validations';
+import VALIDATIONS from 'constants/validations';
 import { useState } from 'react';
 
 const useInput = ({ initialValue, errorMessage, required, type }) => {
@@ -7,7 +7,9 @@ const useInput = ({ initialValue, errorMessage, required, type }) => {
   const isValid = VALIDATIONS[type];
 
   const handleChange = ({ target: { value } }) => {
-    setValid(isValid(value));
+    if (type === 'email' || type === 'password') {
+      setValid(isValid(value));
+    }
     setValue(value);
   };
 
